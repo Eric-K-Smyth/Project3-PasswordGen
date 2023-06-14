@@ -69,7 +69,81 @@ function getPasswordOptions() {
 
   var hasUpperCaseCharacters = confirm(
     'Click OK to confirm including uppercase characters.');
+
+    if (
+      hasSpecialCharacters === false &&
+      hasNumericCharacters === false &&
+      hasLowerCaseCharacters === false &&
+      hasUpperCaseCharacters === false 
+    ) {
+      alert(`At least one character type must be selected`);
+      return null;
+    }
+
+    var passwordstorage = {
+      length: length,
+      hasSpecialCharacters: hasSpecialCharacters,
+      hasNumericCharacters: hasNumericCharacters,
+      hasLowerCaseCharacters: hasLowerCaseCharacters,
+      hasUpperCaseCharacters: hasUpperCaseCharacters,
+    };
+    return passwordstorage;
+  }
+
+function getRandom(arr){
+  var randIndex = Math.floor(Math.random() * arr.length);
+  var randElement = arr[randIndex];
+
+  return randElement;
 }
+
+function generatePassword() {
+  var options = getPasswordOptions();
+
+  var result = [];
+
+  var possibleCharacters = [];
+
+  var guaranteedCharacters = [];
+
+  if (!options) return null;
+
+
+  if (options.hasSpecialCharacters) {
+    possibleCharacters = possibleCharacters.concat(specialCharacters);
+    guaranteedCharacters.push(getRandom(specialCharacters));
+  }
+
+  if (options.hasNumericCharacters) {
+    possibleCharacters = possibleCharacters.concat(numericCharacters);
+    guaranteedCharacters.push(getRandom(numericCharacters));
+  }
+
+  if (options.hasLowerCaseCharacters) {
+    possibleCharacters = possibleCharacters.concat(lowercaseCharacters);
+    guaranteedCharacters.push(getRandom(lowercaseCharacters));
+  }
+
+  if (options.hasUpperCaseCharacters) {
+    possibleCharacters = possibleCharacters.concat(uppercaseCharacters);
+    guaranteedCharacters.push(getRandom(uppercaseCharacters));
+  }
+
+for (var i = 0; i < options.length; i++){
+  var possibleCharacter = getRandom(possibleCharacters);
+  result.push(possibleCharacter);
+}
+
+for (var i = 0; i < guaranteedCharacters.length; i++) {
+  result[i] = guaranteedCharacters[i];
+}
+ return result.join('');
+
+}
+
+
+
+
 
 
 
